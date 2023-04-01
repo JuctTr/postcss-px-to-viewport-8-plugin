@@ -12,7 +12,7 @@ import {
 } from './utils';
 import objectAssign from 'object-assign';
 
-import { AtRule, Root, Rule } from 'postcss';
+import { AtRule, Root, Rule, Plugin } from 'postcss';
 
 const defaults: Required<Omit<OptionType, 'exclude' | 'include'>> = {
   unitToConvert: 'px',
@@ -87,8 +87,13 @@ function includeFiles(filePath: string, options: OptionType) {
   }
   throw new TypeError('options.include should be RegExp or Array of RegExp.');
 }
-
-const postcssPxToViewport = (options: OptionType) => {
+/**
+ * @document https://www.postcss.com.cn/docs/writing-a-postcss-plugin
+ * AST 节点的 API 查询 https://www.postcss.com.cn/api/
+ * @param options
+ * @returns
+ */
+function postcssPxToViewport(options: OptionType): Plugin {
   const opts = objectAssign({}, defaults, options);
 
   const pxRegex = getUnitRegexp(opts.unitToConvert);
@@ -268,7 +273,7 @@ const postcssPxToViewport = (options: OptionType) => {
       }
     },
   };
-};
+}
 
 postcssPxToViewport.postcss = true;
 module.exports = postcssPxToViewport;
