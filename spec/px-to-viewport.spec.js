@@ -7,7 +7,7 @@
 var postcss = require('postcss');
 var pxToViewport = require('../lib');
 var basicCSS = '.rule { font-size: 15px }';
-var { filterPropList } = require('../src/prop-list-matcher');
+var { filterPropList } = require('../lib/prop-list-matcher');
 
 describe('px-to-viewport', function() {
   it('should work on the readme example', function() {
